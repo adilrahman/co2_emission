@@ -1,0 +1,96 @@
+<html>
+<style>
+html, body {
+	border: 0; margin: 0; padding: 0;
+	margin: 0 auto; max-width: 1200px;
+}
+body {font: 14px "Lato", Arial, sans-serif; min-width: 100%; min-height: 100%; color: #666;}
+.prediction{
+  font-size: 150%;
+  margin: 0 auto; 
+  max-width: 1200px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+
+}
+input[type=text], select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+.form{
+  margin: 0 auto; 
+  max-width: 1200px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.Heading{
+	font-family : verdana;
+	font-size: 300%;
+	color: rgb(100,155,155);
+}
+
+</style>
+<body>
+	<div class="Heading">
+		<h1>CO<sub>2</sub> EMISSION</h1>
+	</div>
+	<!--["Vehicle Class","Transmission","Fuel Type","Engine Size(L)","Cylinders","Fuel Consumption Comb (L/100 km)"]*/-->
+	<div class="form">
+	<form action="{{ url_for('predict') }}" method="post">
+		<input class="text" type="number" name="engine_size" placeholder="Engine Size(L)" required>
+		<br>
+		<input class="text" type="number"  placeholder="Cylinders" name="cylinders" required>
+		<br>
+		<input class="text" type="number" name="fuel_consumption_c" placeholder="Fuel Consumption Comb (L/100 km)" required>
+		<br>
+		<label for="fuel_type">Fuel type</label>
+		<select name="fuel_type">
+			{%for i in fuel_type.keys()%}
+			<option value={{ fuel_type[i] }}>{{ i }}</option>
+			 {% endfor %}
+		</select>
+		<br>
+		<label for="transmission">Transmission</label>
+		<select name="transmission">
+			{%for i in transmission.keys()%}
+			<option value={{ transmission[i] }}>{{ i }}</option>
+			 {% endfor %}
+		</select>
+		<br>
+		<label for="vehicle_class">Vehicle class</label>
+		<select name="vehicle_class">
+			{%for i in vehicle_class.keys()%}
+			<option value={{ vehicle_class[i] }}>{{ i }}</option>
+			 {% endfor %}
+		</select>
+		<br>
+		<button type="submit">Predict</button>
+	</form>
+	</div>
+	<br><br>
+	<div id="prediction">
+		{{ predicted_value }}
+	</div>
+</body>
+</html>
